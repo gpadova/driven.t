@@ -21,7 +21,10 @@ export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, re
 
   try {
     if(cep.length !== 8) {
-      res.sendStatus(404);
+      return res.sendStatus(404);
+    }
+    if (/^\d+$/.test(cep)) {
+      return res.sendStatus(404);
     }
 
     await enrollmentsService.createOrUpdateEnrollmentWithAddress({
